@@ -41,6 +41,24 @@ How to keep an application usable when its dependencies are slow, failing, or ov
 
 **Load shedding** based on `/system-load`: over 80% → Tier 1 only · 60–80% → Tiers 1–2 · under 60% → all tiers.
 
+## Screenshots
+
+**Circuit breaker and retry:** retries with growing waits, then the breaker going closed → open → half-open → closed.
+
+![Circuit breaker and retry](docs/images/circuit-breaker-retry.png)
+
+**Graceful degradation:** load shedding by CPU load, with cached reviews as a fallback.
+
+![Graceful degradation](docs/images/graceful-degradation.png)
+
+**Deployed to AWS with Terraform:**
+
+![terraform apply](docs/images/terraform-apply.png)
+
+**CI pipeline passing:**
+
+![GitHub Actions CI](docs/images/ci-passing.png)
+
 ## Run locally
 
 ```bash
