@@ -1,0 +1,25 @@
+#!/bin/bash
+dnf install -y python3-pip
+pip3 install fastapi uvicorn
+
+mkdir -p /opt/resiliency-api
+cat > /opt/resiliency-api/main.py <<'PYEOF'
+${api_code}
+PYEOF
+
+cat > /etc/systemd/system/resiliency-api.service <<'SVCEOF'
+[Unit]
+Description=Resiliency patterns FastAPI
+After=network-online.target
+
+[Service]
+WorkingDirectory=/opt/resiliency-api
+ExecStart=/usr/bin/python3 -m uvicorn main:app --host 0.0.0.0 --port 80
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+SVCEOF
+
+systemctl daemon-reload
+systemctl enable --now resiliency-api
